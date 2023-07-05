@@ -293,15 +293,18 @@ func (c *Controller) handleAddOrUpdateVpcNatGw(key string) error {
 
 func (c *Controller) syncVpcNatGwRules(key string) error {
 	// sync all nat crd
-	pod, err := c.getNatGwPod(key)
-	if err != nil {
-		return err
-	}
+	// 代码多余并且会有同步问题
+	/*
+		pod, err := c.getNatGwPod(key)
+		if err != nil {
+			return err
+		}
 
-	if _, hasInit := pod.Annotations[util.VpcNatGatewayInitAnnotation]; !hasInit {
-		c.initVpcNatGatewayQueue.Add(key)
-		return nil
-	}
+		if _, hasInit := pod.Annotations[util.VpcNatGatewayInitAnnotation]; !hasInit {
+			c.initVpcNatGatewayQueue.Add(key)
+			return nil
+		}
+	*/
 	c.updateVpcFloatingIpQueue.Add(key)
 	c.updateVpcDnatQueue.Add(key)
 	c.updateVpcSnatQueue.Add(key)
